@@ -1,5 +1,5 @@
-from . import configuration
-from .crawler import Crawler
+from watchdog3 import configuration
+from watchdog3.crawler import Crawler
 import sys
 __author__ = 'amin'
 __version__ = '0.2.0a'

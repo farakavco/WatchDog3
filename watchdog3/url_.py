@@ -18,6 +18,11 @@ class URL(object):
         type_ = mimetypes.guess_type(url)[0]
         return type_ and type_.startswith('image/')
 
+    @classmethod
+    def is_video(cls, url):
+        type_ = mimetypes.guess_type(url)[0]
+        return type_ and type_.startswith('video/')
+
     def ensure_primitive_slash(self):
         if not self.has_primitive_slash:
             return '/%s' % self.url
