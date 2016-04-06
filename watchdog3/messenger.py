@@ -15,7 +15,7 @@ class Messenger(object):
         }
         self.message = {
                 'token': self.token,
-                'text': 'sd',
+                'text': self.slack_message,
                 'channel': self.receiving_channel,
 
         }

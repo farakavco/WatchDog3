@@ -32,3 +32,13 @@ class URL(object):
         if self.is_relative:
             return '%s://%s%s' % (scheme, domain, self.ensure_primitive_slash())
         return self.url
+
+    @classmethod
+    def normalize(cls, url):
+        if url.startswith('http://www.varzesh3.com/video') or url.startswith('http://www.varzesh3.com/category') or\
+                url.startswith('http://www.varzesh3.com/archive'):
+            normalized = url.replace('http://www.', 'http://video.')
+            return normalized
+
+        return url
+

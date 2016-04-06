@@ -5,10 +5,10 @@ __author__ = 'amin'
 __builtin_config = """
 
 sites:
-  - http://beta.farakav.com
+  - http://www.varzesh3.com
 
 request_timeout: 4
-url_worker_threads: 4
+url_worker_threads: 16
 img_worker_threads: 16
 url_queue_wait_timeout: 2
 
