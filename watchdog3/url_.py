@@ -1,4 +1,5 @@
 import mimetypes
+from watchdog3 import configuration
 
 
 class URL(object):
@@ -23,6 +24,10 @@ class URL(object):
         type_ = mimetypes.guess_type(url)[0]
         return type_ and type_.startswith('video/')
 
+    @classmethod
+    def is_lenz(cls, url):
+        return url.startswith('lenz.')
+
     def ensure_primitive_slash(self):
         if not self.has_primitive_slash:
             return '/%s' % self.url
@@ -35,9 +40,13 @@ class URL(object):
 
     @classmethod
     def normalize(cls, url):
-        if url.startswith('http://www.varzesh3.com/video') or url.startswith('http://www.varzesh3.com/category') or\
-                url.startswith('http://www.varzesh3.com/archive'):
-            normalized = url.replace('http://www.', 'http://video.')
+        for mistreated_url in configuration.settings.mistreated_urls:
+            if url.startswith(mistreated_url):
+                normalized = url.replace('http://www.', 'http://video.')
+                return normalized
+
+        if url.startswith(configuration.settings.mistreated_portal_url):
+            normalized = url.replace('http://www.', 'http://sms.')
             return normalized
 
         return url

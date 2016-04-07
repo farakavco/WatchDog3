@@ -6,6 +6,8 @@ from queue import Queue, Empty
 from watchdog3.messenger import Messenger
 import threading
 import re
+import time
+import cProfile
 __author__ = 'amin'
 
 
@@ -14,6 +16,7 @@ class Crawler(object):
         '<a\s+(?:[^>]*?\s+)?href="(?P<url>[^"]*)"',
         '<img\s+(?:[^>]*?\s+)?src="(?P<url>[^"]*)"'
     ]
+    max_queue_size = 0
 
     def __init__(self, url):
         self.url = url
@@ -27,14 +30,15 @@ class Crawler(object):
         self.worker_threads = {}
         self.image_worker_threads = {}
 
-    def append_message(self, url, message):
-        msg = '%s: %s' % (url, message)
+    def append_message(self, url, message, parent_url):
+        msg = '%s: %s: from %s' % (url, message, parent_url)
         print('ERROR: %s' % msg)
         self.messages.append(msg)
 
     def crawl(self):
-        self.urls.put(0, '', self.url)
-        self.url_worker()
+        self.urls.put((0, '', self.url))
+        for item in configuration.manualy_added:
+            self.urls.put(2, 'http://video.varzesh3.com', item)
 
         for i in range(configuration.settings.url_worker_threads):
             print('Spawning thread: %s' % i)
@@ -47,6 +51,7 @@ class Crawler(object):
             thread.join()
         my_messenger = Messenger(self.messages)
         my_messenger.deliver_message()
+        print(str(self.max_queue_size))
 
     def extract_urls(self, html_content, level, parent_url):
         for pattern in self.url_patterns:
@@ -56,7 +61,7 @@ class Crawler(object):
                 url_hash = hash(url)
                 if url_hash not in self.urls_hash:
                         self.urls_hash.append(url_hash)
-                        self.urls.put(level, parent_url, url)
+                        self.urls.put((level, parent_url, url))
 
     def url_worker(self):
         while True:
@@ -64,15 +69,14 @@ class Crawler(object):
                 level, parent_url, url = self.urls.get(timeout=configuration.settings.url_queue_wait_timeout)
             except Empty:
                 break
-            print('Processing %s originated from %s' % (url, parent_url))
             try:
-                if not URL.is_video(url):
+                if not URL.is_video(url) and ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))):
                     response = requests.get(url, timeout=4)
                     if response.status_code is not 200:
-                        self.append_message(url, response.status_code)
+                        self.append_message(url, response.status_code, parent_url)
                         continue
-                    if not URL.is_image(url) and level < 2:
+                    if not URL.is_image(url):
                         self.extract_urls(response.content.decode(), level+1, url)
 
             except Exception as ex:
-                self.append_message(url, 'Following Exception Occurred: %s\n' % ex)
+                self.append_message(url, 'Following Exception Occurred: %s\n' % ex, parent_url)
