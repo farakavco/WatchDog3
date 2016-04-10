@@ -5,17 +5,25 @@ from watchdog3 import configuration
 class Messenger(object):
     def __init__(self, text_list):
         self.token = configuration.settings.slack_access_token
-        self.text_list = self.normalize_text_list(text_list)
+        self.text_list = self.normalize(text_list)
         self.receiving_channel = configuration.settings.receiving_channel
 
         self.message = {
                 'token': self.token,
                 'text': self.make_message(),
                 'channel': self.receiving_channel,
-
         }
 
         self.api_url = configuration.settings.crow_api_url
+
+    def normalize(self, message):
+        normalized = message
+        for ignore in configuration.ignore_list:
+            for item in normalized:
+                if ignore in item:
+                    normalized.remove(item)
+                # continue
+        return normalized
 
     def make_message(self):
         slack_message = ''
@@ -24,26 +32,11 @@ class Messenger(object):
                 slack_message += '%s%s' % (message, '\n')
         else:
             slack_message += 'all links are fine'
+        print(slack_message)
+        return slack_message
 
-        return self.normalize(slack_message)
-
-    def normalize_text_list(self, text_list):
-        normalized_text_list = text_list
-        for text in normalized_text_list:
-            if 'HTTPConnectionPool' in text or 'Read timed out' in text or 'Connection refused' in text or 'cloudfront'\
-                    in text:
-                normalized_text_list.remove(text)
-        return normalized_text_list
-
-    def normalize(self, message):
-        normalized = message
-        for ignore in configuration.ignore_list:
-            if ignore in normalized:
-                normalized = normalized.replace(ignore, '')
-
-        return normalized
-
-    def deliver_message(self):        
+    def deliver_message(self):
+        print('this is slack message %s' % self.message['text'])
         response = requests.post(self.api_url, json=self.message)
         print(response.json())
 

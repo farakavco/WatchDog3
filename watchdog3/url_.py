@@ -2,6 +2,7 @@ import mimetypes
 from watchdog3 import configuration
 
 
+
 class URL(object):
     def __init__(self, url):
         self.url = url

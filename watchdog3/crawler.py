@@ -1,13 +1,12 @@
+from urllib.parse import urlparse
+from queue import Queue, Empty
+import threading
+import re
 import requests
 from watchdog3 import configuration
 from watchdog3.url_ import URL
-from urllib.parse import urlparse
-from queue import Queue, Empty
 from watchdog3.messenger import Messenger
-import threading
-import re
-import time
-import cProfile
+
 __author__ = 'amin'
 
 
@@ -37,7 +36,7 @@ class Crawler(object):
 
     def crawl(self):
         self.urls.put((0, '', self.url))
-        for item in configuration.manualy_added:
+        for item in configuration.manually_added:
             self.urls.put(2, 'http://video.varzesh3.com', item)
 
         for i in range(configuration.settings.url_worker_threads):
