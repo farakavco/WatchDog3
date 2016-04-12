@@ -10,8 +10,7 @@ with open(os.path.join(os.path.dirname(__file__), 'watchdog3', '__init__.py')) a
 
 requires = [
     'pymlconf',
-    'requests',
-    'grequests'
+    'requests'
 ]
 
 

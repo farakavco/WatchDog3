@@ -10,7 +10,9 @@ mistreated_urls:
   - http://www.varzesh3.com/category
   - http://www.varzesh3.com/archive
 mistreated_portal_url: http://www.varzesh3.com/PortalData/Subsystems/
-manual_add: http://lenz.varzesh3.com/#!/
+manual_adds:
+  - http://lenz.varzesh3.com/#!/
+  - http://www.varzesh3.com/newspaper
 request_timeout: 2
 url_worker_threads: 64
 url_queue_wait_timeout: 4
@@ -33,15 +35,16 @@ def init():
     ignore_list = [
         '{Url}',
         'bottom-logo.png',
-        'logo.png',
+        'http://www.varzesh3.com/Static/img/logo.png',
+        'http://www.varzesh3.com/Content/assets/image/lenz-logo.png',
         'ConnectionPool',
-        'logo.png',
         'welcome.png',
         'hamraheman_logo',
         'twitter',
         'cloudfront.',
         'facebook',
         'loading.gif',
+        '{{ImageUrl}}',
         'http://taktix.varzesh3.com',
         '{{ VideoUrl }}',
         '{{ SummaryUrl }}',

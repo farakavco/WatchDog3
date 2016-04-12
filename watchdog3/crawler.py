@@ -36,6 +36,8 @@ class Crawler(object):
 
     def crawl(self):
         self.urls.put((0, '', self.url))
+        for item in configuration.settings.manual_adds:
+            self.urls.put(0, '', item)
         for item in configuration.manually_added:
             self.urls.put(2, 'http://video.varzesh3.com', item)
 

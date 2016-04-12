@@ -28,6 +28,8 @@ class Messenger(object):
     def make_message(self):
         slack_message = ''
         if self.text_list:
+            slack_message = '%s%s' % ('Result of WatchDog Scouting Varzesh3 Links: These Links Appear to Have Problem',
+                                      '\n')
             for message in self.text_list:
                 slack_message += '%s%s' % (message, '\n')
         else:
