@@ -31,13 +31,13 @@ class Crawler(object):
 
     def append_message(self, url, message, parent_url):
         msg = '%s: %s: from %s' % (url, message, parent_url)
-        print('ERROR: %s' % msg)
+        # print('ERROR: %s' % msg)
         self.messages.append(msg)
 
     def crawl(self):
         self.urls.put((0, '', self.url))
-        for item in configuration.settings.manual_adds:
-            self.urls.put(0, '', item)
+        self.urls.put((0, '', 'http://lenz.varzesh3.com/#!/'))
+        self.urls.put((0, '', 'http://www.varzesh3.com/newspaper'))
         for item in configuration.manually_added:
             self.urls.put(2, 'http://video.varzesh3.com', item)
 
@@ -71,6 +71,8 @@ class Crawler(object):
             except Empty:
                 break
             try:
+                if 'paper' in url:
+                    print('processing %s' % url)
                 if not URL.is_video(url) and ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))):
                     response = requests.get(url, timeout=4)
                     if response.status_code is not 200:

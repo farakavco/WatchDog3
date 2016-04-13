@@ -10,11 +10,8 @@ mistreated_urls:
   - http://www.varzesh3.com/category
   - http://www.varzesh3.com/archive
 mistreated_portal_url: http://www.varzesh3.com/PortalData/Subsystems/
-manual_adds:
-  - http://lenz.varzesh3.com/#!/
-  - http://www.varzesh3.com/newspaper
 request_timeout: 2
-url_worker_threads: 64
+url_worker_threads: 16
 url_queue_wait_timeout: 4
 receiving_channel: '@amin'
 crow_api_url: 'http://crow.farakav.com/api/message'
