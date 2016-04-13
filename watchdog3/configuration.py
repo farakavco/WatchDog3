@@ -4,7 +4,7 @@ __author__ = 'amin'
 
 __builtin_config = """
 sites:
-  - http://www.varzesh3.com
+  - http://video.varzesh3.com
 mistreated_urls:
   - http://www.varzesh3.com/video
   - http://www.varzesh3.com/category
@@ -35,6 +35,7 @@ def init():
         'ads.farakav',
         'http://www.varzesh3.com/Static/img/logo.png',
         'http://www.varzesh3.com/Content/assets/image/lenz-logo.png',
+        'http://www.varzesh3.com/Sso/GetLoginToken',
         'ConnectionPool',
         'welcome.png',
         'hamraheman_logo',
@@ -43,6 +44,7 @@ def init():
         'facebook',
         'loading.gif',
         '{{ImageUrl}}',
+        'lenz-logo.png'
         'http://taktix.varzesh3.com',
         '{{ VideoUrl }}',
         '{{ SummaryUrl }}',
@@ -74,5 +76,6 @@ def init():
         'http://video.varzesh3.com/Static/img/logo.png',
         'http://video.varzesh3.com/Static/img/google-icon.png',
         'http://video.varzesh3.com/Static/img/facebook-icon.png',
-        'http://video.varzesh3.com/Static/img/yahoo-icon.png'
+        'http://video.varzesh3.com/Static/img/yahoo-icon.png',
+        'http://lenz.varzesh3.com/Sso/GetLoginToken'
     ]

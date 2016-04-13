@@ -34,15 +34,10 @@ class Messenger(object):
                 slack_message += '%s%s' % (message, '\n')
         else:
             slack_message += 'all links are fine'
-        print(slack_message)
         return slack_message
 
     def deliver_message(self):
-        print('this is slack message %s' % self.message['text'])
+        data = self.message['text']
+        print(data)
         response = requests.post(self.api_url, json=self.message)
         print(response.json())
-
-
-if __name__ == '__main__':
-    amin = Messenger('hi')
-    amin.deliver_message()

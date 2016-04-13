@@ -36,12 +36,6 @@ class Crawler(object):
 
     def crawl(self):
         self.urls.put((0, '', self.url))
-        self.urls.put((0, '', 'http://lenz.varzesh3.com/#!/'))
-        self.urls.put((0, '', 'http://www.varzesh3.com/newspaper'))
-        self.urls.put((0, '', 'http://www.varzesh3.com/playoff'))
-        for item in configuration.manually_added:
-            self.urls.put(2, 'http://video.varzesh3.com', item)
-
         for i in range(configuration.settings.url_worker_threads):
             print('Spawning thread: %s' % i)
             new_thread = threading.Thread(target=self.url_worker, daemon=True)
@@ -53,7 +47,7 @@ class Crawler(object):
             thread.join()
         my_messenger = Messenger(self.messages)
         my_messenger.deliver_message()
-        print(str(self.max_queue_size))
+        # print(str(self.max_queue_size))
 
     def extract_urls(self, html_content, level, parent_url):
         for pattern in self.url_patterns:
@@ -73,8 +67,8 @@ class Crawler(object):
                 break
             try:
 
-                # print('processing %s' % url)
-                if not URL.is_video(url) and ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))):
+                print('processing %s' % url)
+                if (level is 0 or level is 1) or (level is 2 and (URL.is_video(url))):
                     response = requests.get(url, timeout=4)
                     if response.status_code is not 200:
                         self.append_message(url, response.status_code, parent_url)
