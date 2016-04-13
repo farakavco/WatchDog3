@@ -32,10 +32,12 @@ def init():
     ignore_list = [
         '{Url}',
         'bottom-logo.png',
+        'http://ads.farakav.com',
         'http://www.varzesh3.com/Static/img/logo.png',
         'http://www.varzesh3.com/Content/assets/image/lenz-logo.png',
         'ConnectionPool',
         'welcome.png',
+        'http://www.varzesh3.com/Sso/GetLoginToken',
         'hamraheman_logo',
         'twitter',
         'cloudfront.',
@@ -73,5 +75,8 @@ def init():
         'http://video.varzesh3.com/Static/img/logo.png',
         'http://video.varzesh3.com/Static/img/google-icon.png',
         'http://video.varzesh3.com/Static/img/facebook-icon.png',
-        'http://video.varzesh3.com/Static/img/yahoo-icon.png'
+        'http://video.varzesh3.com/Static/img/yahoo-icon.png',
+        'http://lenz.varzesh3.com/Sso/GetLoginToken'
+
+
     ]
