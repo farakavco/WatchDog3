@@ -35,6 +35,7 @@ def init():
         'http://ads.farakav.com',
         'http://www.varzesh3.com/Static/img/logo.png',
         'http://www.varzesh3.com/Content/assets/image/lenz-logo.png',
+        'http://www.varzesh3.com/images/jiring.png',
         'ConnectionPool',
         'welcome.png',
         'http://www.varzesh3.com/Sso/GetLoginToken',
