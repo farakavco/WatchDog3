@@ -32,6 +32,7 @@ def init():
     ignore_list = [
         '{Url}',
         'bottom-logo.png',
+        'ads.farakav',
         'http://www.varzesh3.com/Static/img/logo.png',
         'http://www.varzesh3.com/Content/assets/image/lenz-logo.png',
         'ConnectionPool',
