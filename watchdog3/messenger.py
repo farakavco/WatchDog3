@@ -31,7 +31,7 @@ class Messenger(object):
             slack_message = '%s%s' % ('Result of WatchDog Scouting Varzesh3 Links: These Links Appear to Have Problem',
                                       '\n')
             for message in self.text_list:
-                slack_message += '%s%s' % (message, '\n')
+                slack_message += '`%s%s' % (message, '`\n')
         else:
             slack_message += 'all links are fine'
         print(slack_message)
