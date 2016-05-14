@@ -1,10 +1,10 @@
 import requests
 from watchdog3 import configuration
-
+import jwt
 
 class Messenger(object):
     def __init__(self, text_list):
-        self.token = configuration.settings.slack_access_token
+        # self.token = configuration.settings.slack_access_token
         self.text_list = self.normalize(text_list)
         self.receiving_channel = configuration.settings.receiving_channel
 
@@ -37,9 +37,20 @@ class Messenger(object):
         print(slack_message)
         return slack_message
 
+    def athenticate(self):
+	authenticate = {
+	'token': configuration.settings.slack_access_token
+	}
+	return jwt.encode(athentication, configuration.settings.secret_key)
+
+    def make_headers(self):
+	return {
+	'X-JWT-Token': self.authenticate()
+	}
     def deliver_message(self):
         print('this is slack message %s' % self.message['text'])
-        response = requests.post(self.api_url, json=self.message)
+
+        response = requests.post(self.api_url, json=self.message, headers=self.make_headers())
         print(response.json())
 
 

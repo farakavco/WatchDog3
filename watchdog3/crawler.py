@@ -38,7 +38,7 @@ class Crawler(object):
         self.urls.put((0, '', self.url))
         self.urls.put((0, '', 'http://lenz.varzesh3.com/#!/'))
         self.urls.put((0, '', 'http://www.varzesh3.com/newspaper'))
-        self.urls.put((0, '', 'http://www.varzesh3.com/playoff'))
+       #  self.urls.put((0, '', 'http://www.varzesh3.com/playoff'))
         for item in configuration.manually_added:
             self.urls.put(2, 'http://video.varzesh3.com', item)
 
