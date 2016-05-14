@@ -43,9 +43,10 @@ class Messenger(object):
         return jwt.encode(authentication, configuration.settings.secret_key)
 
     def make_headers(self):
-	return {
-	'X-JWT-Token': self.authenticate()
-	}
+        return {
+            'X-JWT-Token': self.authenticate()
+        }
+
     def deliver_message(self):
         print('this is slack message %s' % self.message['text'])
 
