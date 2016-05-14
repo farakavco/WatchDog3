@@ -52,7 +52,7 @@ class Messenger(object):
         print('this is slack message %s' % self.message['text'])
 
         response = requests.post(self.api_url, json=self.message, headers=self.make_headers())
-        print(response.json())
+        print(response.text)
 
 
 if __name__ == '__main__':
