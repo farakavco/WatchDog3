@@ -9,7 +9,6 @@ class Messenger(object):
         self.receiving_channel = configuration.settings.receiving_channel
 
         self.message = {
-                'token': self.token,
                 'text': self.make_message(),
                 'channel': self.receiving_channel,
         }
@@ -37,11 +36,11 @@ class Messenger(object):
         print(slack_message)
         return slack_message
 
-    def athenticate(self):
-	authenticate = {
-	'token': configuration.settings.slack_access_token
-	}
-	return jwt.encode(athentication, configuration.settings.secret_key)
+    def authenticate(self):
+        authentication = {
+            'token': configuration.settings.slack_access_token
+        }
+        return jwt.encode(authentication, configuration.settings.secret_key)
 
     def make_headers(self):
 	return {

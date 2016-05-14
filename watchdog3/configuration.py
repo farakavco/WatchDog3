@@ -13,9 +13,9 @@ mistreated_portal_url: http://www.varzesh3.com/PortalData/Subsystems/
 request_timeout: 2
 url_worker_threads: 16
 url_queue_wait_timeout: 4
-receiving_channel: '@amin'
+receiving_channel: '@moh3n'
 crow_api_url: 'http://crow.farakav.com/api/message'
-slack_access_token: xoxp-13319976114-20556087794-35387600338-2a688e203a
+slack_access_token: xoxp-13319976114-20556087794-42969655874-0d1f3fc253
 secret_key = KmFePUtnvQ3sXjuNq4wNVz9U2MCUtKGufsdhD324HGd
 """
 
