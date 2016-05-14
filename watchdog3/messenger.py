@@ -2,6 +2,7 @@ import requests
 from watchdog3 import configuration
 import jwt
 
+
 class Messenger(object):
     def __init__(self, text_list):
         # self.token = configuration.settings.slack_access_token

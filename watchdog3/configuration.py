@@ -16,7 +16,7 @@ url_queue_wait_timeout: 4
 receiving_channel: '@moh3n'
 crow_api_url: 'http://crow.farakav.com/api/message'
 slack_access_token: xoxp-13319976114-20556087794-42969655874-0d1f3fc253
-secret_key = KmFePUtnvQ3sXjuNq4wNVz9U2MCUtKGufsdhD324HGd
+secret_key: KmFePUtnvQ3sXjuNq4wNVz9U2MCUtKGufsdhD324HGd
 """
 
 settings = None
