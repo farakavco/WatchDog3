@@ -69,6 +69,7 @@ class Crawler(object):
             except Empty:
                 break
             try:
+                print('processing %s', url)
                 if not URL.is_video(url) and ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))):
                     response = requests.get(url, timeout=4)
                     if response.status_code is not 200:

@@ -18,8 +18,7 @@ class Messenger(object):
         self.api_url = self.conf.crow_api_url
 
     def normalize(self, message):
-        return [item for item in message if
-                [ignore for ignore in self.ignore_list if ignore not in item]]
+        return [item for item in message if not [ignore for ignore in self.ignore_list if ignore in item]]
 
     def authenticate(self):
         return jwt.encode({'token': self.conf.slack_access_token}, self.conf.secret_key)
