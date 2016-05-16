@@ -5,55 +5,32 @@ import jwt
 
 class Messenger(object):
     def __init__(self, text_list):
+        self.conf = configuration.settings
+        self.receiving_channel = self.conf.receiving_channel
+        self.ignore_list = self.conf.ignore_list
+        self.slack_message = ''
         self.text_list = self.normalize(text_list)
-        self.receiving_channel = configuration.settings.receiving_channel
-
+        self.make_message()
         self.message = {
-                'text': self.make_message(),
+                'text': self.slack_message,
                 'channel': self.receiving_channel,
         }
-
-        self.api_url = configuration.settings.crow_api_url
+        self.api_url = self.conf.crow_api_url
 
     def normalize(self, message):
-        normalized = []
-        ignore_list = configuration.ignore_list
-        for ignore in ignore_list:
-            for item in message:
-                if ignore not in item:
-                    normalized.append(item)
-        return normalized
-
-    def make_message(self):
-        slack_message = ''
-        if self.text_list:
-            slack_message = '%s%s' % (configuration.settings.report_message,
-                                      '\n')
-            for message in self.text_list:
-                slack_message += '`%s%s' % (message, '`\n')
-        else:
-            slack_message += 'all links are fine'
-        print(slack_message)
-        return slack_message
+        return [item for item in message if
+                [ignore for ignore in self.ignore_list if ignore not in item]]
 
     def authenticate(self):
-        authentication = {
-            'token': configuration.settings.slack_access_token
-        }
-        return jwt.encode(authentication, configuration.settings.secret_key)
+        return jwt.encode({'token': self.conf.slack_access_token}, self.conf.secret_key)
 
     def make_headers(self):
-        return {
-            'X-JWT-Token': self.authenticate()
-        }
+        return {'X-JWT-Token': self.authenticate()}
+
+    def make_message(self):
+        if self.text_list:
+            for message in self.text_list:
+                self.slack_message += '%s%s' % (message, '\n')
 
     def deliver_message(self):
-        print('this is slack message %s' % self.message['text'])
-
-        response = requests.post(self.api_url, json=self.message, headers=self.make_headers())
-        print(response.text)
-
-
-if __name__ == '__main__':
-    amin = Messenger('hi')
-    amin.deliver_message()
+        print(requests.post(self.api_url, json=self.message, headers=self.make_headers()).text)
