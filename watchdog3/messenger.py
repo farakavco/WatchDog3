@@ -5,7 +5,6 @@ import jwt
 
 class Messenger(object):
     def __init__(self, text_list):
-        # self.token = configuration.settings.slack_access_token
         self.text_list = self.normalize(text_list)
         self.receiving_channel = configuration.settings.receiving_channel
 
@@ -17,18 +16,18 @@ class Messenger(object):
         self.api_url = configuration.settings.crow_api_url
 
     def normalize(self, message):
-        normalized = message
-        for ignore in configuration.ignore_list:
-            for item in normalized:
-                if ignore in item:
-                    normalized.remove(item)
-                # continue
+        normalized = []
+        ignore_list = configuration.ignore_list
+        for ignore in ignore_list:
+            for item in message:
+                if ignore not in item:
+                    normalized.append(item)
         return normalized
 
     def make_message(self):
         slack_message = ''
         if self.text_list:
-            slack_message = '%s%s' % ('Result of WatchDog Scouting Varzesh3 Links: These Links Appear to Have Problem',
+            slack_message = '%s%s' % (configuration.settings.report_message,
                                       '\n')
             for message in self.text_list:
                 slack_message += '`%s%s' % (message, '`\n')
