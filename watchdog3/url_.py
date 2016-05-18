@@ -2,7 +2,6 @@ import mimetypes
 from watchdog3 import configuration
 
 
-
 class URL(object):
     def __init__(self, url):
         self.url = url
@@ -14,6 +13,10 @@ class URL(object):
     @property
     def has_primitive_slash(self):
         return self.url.startswith('/')
+
+    @classmethod
+    def is_ad(cls, url):
+        return 'ads.farakav' in url
 
     @classmethod
     def is_image(cls, url):
@@ -51,4 +54,9 @@ class URL(object):
             return normalized
 
         return url
+
+    @classmethod
+    def is_allowed(cls, url, level):
+        return (not URL.is_ad(url) and not URL.is_video(url) and
+                ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))))
 

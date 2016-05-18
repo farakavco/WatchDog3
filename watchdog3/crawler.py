@@ -23,11 +23,20 @@ class Crawler(object):
         self.domain = url_parts.netloc
         self.scheme = url_parts.scheme
         self.urls_hash = []
+        self.add_ignore_list()
+        self.call_varzesh3_ad()
         self.urls = Queue()
         self.messages = []
-        self.image_messages = []
         self.worker_threads = {}
         self.image_worker_threads = {}
+
+    def call_varzesh3_ad(self):
+        for item in requests.get(configuration.settings.ads_url).json():
+            self.urls_hash.append(hash('http://' + item['Href']))
+
+    def add_ignore_list(self):
+        for ignore in configuration.settings.ignore:
+            self.urls_hash.append(hash(ignore))
 
     def append_message(self, url, message, parent_url):
         msg = '%s: %s: from %s' % (url, message, parent_url)
@@ -69,8 +78,8 @@ class Crawler(object):
             except Empty:
                 break
             try:
-                print('processing %s', url)
-                if not URL.is_video(url) and ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))):
+                if URL.is_allowed(url, level):
+                    print('processing %s', url)
                     response = requests.get(url, timeout=4)
                     if response.status_code is not 200:
                         self.append_message(url, response.status_code, parent_url)
@@ -80,3 +89,4 @@ class Crawler(object):
 
             except Exception as ex:
                 self.append_message(url, 'Following Exception Occurred: %s\n' % ex, parent_url)
+

@@ -30,6 +30,8 @@ class Messenger(object):
         if self.text_list:
             for message in self.text_list:
                 self.slack_message += '%s%s' % (message, '\n')
+        else:
+            self.slack_message = 'all fine'
 
     def deliver_message(self):
         print(requests.post(self.api_url, json=self.message, headers=self.make_headers()).text)
