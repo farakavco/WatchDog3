@@ -78,7 +78,7 @@ class Crawler(object):
             except Empty:
                 break
             try:
-                if URL.is_allowed(url, level):
+                if URL.is_allowed(url, level) and URL.varzesh3_domain(url):
                     print('processing %s', url)
                     response = requests.get(url, timeout=4)
                     if response.status_code is not 200:
@@ -89,4 +89,3 @@ class Crawler(object):
 
             except Exception as ex:
                 self.append_message(url, 'Following Exception Occurred: %s\n' % ex, parent_url)
-

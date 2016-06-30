@@ -60,3 +60,7 @@ class URL(object):
         return (not URL.is_ad(url) and not URL.is_video(url) and
                 ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))))
 
+    @classmethod
+    def varzesh3_domain(cls, url):
+        return 'varzesh3' in url
+
