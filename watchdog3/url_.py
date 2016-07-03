@@ -15,10 +15,6 @@ class URL(object):
         return self.url.startswith('/')
 
     @classmethod
-    def is_ad(cls, url):
-        return 'ads.farakav' in url
-
-    @classmethod
     def is_image(cls, url):
         type_ = mimetypes.guess_type(url)[0]
         return type_ and type_.startswith('image/')
@@ -27,10 +23,6 @@ class URL(object):
     def is_video(cls, url):
         type_ = mimetypes.guess_type(url)[0]
         return type_ and type_.startswith('video/')
-
-    @classmethod
-    def is_lenz(cls, url):
-        return url.startswith('lenz.')
 
     def ensure_primitive_slash(self):
         if not self.has_primitive_slash:
@@ -43,24 +35,9 @@ class URL(object):
         return self.url
 
     @classmethod
-    def normalize(cls, url):
-        for mistreated_url in configuration.settings.mistreated_urls:
-            if url.startswith(mistreated_url):
-                normalized = url.replace('http://www.', 'http://video.')
-                return normalized
-
-        if url.startswith(configuration.settings.mistreated_portal_url):
-            normalized = url.replace('http://www.', 'http://sms.')
-            return normalized
-
-        return url
+    def is_local(cls, url):
+        return '192.168.1.2' in url
 
     @classmethod
-    def is_allowed(cls, url, level):
-        return (not URL.is_ad(url) and not URL.is_video(url) and
-                ((level is 0 or level is 1) or (level is 2 and (URL.is_image(url)))))
-
-    @classmethod
-    def varzesh3_domain(cls, url):
-        return 'varzesh3' in url
-
+    def is_allowed(cls, url):
+        return 'twitter' not in url and 'facebook' not in url and 'plus.google' not in url
